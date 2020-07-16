@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>My QnA</title>
+    <title>사용자 목록</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +22,29 @@
         <a class="nav-link" href="list.html">사용자 목록</a>
     </div>
 </nav>
-<h1>Hello, world!</h1>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">사용자 아이디</th>
+                <th scope="col">이름</th>
+                <th scope="col">이메일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Dong</th>
+                <td>동동</td>
+                <td>dong@example.com</td>
+            </tr>
+            <tr>
+                <th scope="row">DongDong</th>
+                <td>동동동</td>
+                <td>dongdong@example.com</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
