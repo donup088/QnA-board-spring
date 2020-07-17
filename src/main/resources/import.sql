@@ -1,0 +1,1 @@
+insert into USER (USER_ID,PASSWORD,NAME,EMAIL) values('dong','test','동','dong@example.com');
