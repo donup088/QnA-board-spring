@@ -1,7 +1,20 @@
-package com.myQnA.QnAboardspring.model;
+package com.myQnA.QnAboardspring.domain;
 
+import org.springframework.lang.NonNull;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false,length = 20)
     private String userId;
 
     private String password;
@@ -40,6 +53,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void update(User updateUser) {
+        this.password=updateUser.password;
+        this.email=updateUser.email;
+        this.userId=updateUser.userId;
+        this.name=updateUser.name;
     }
 
     @Override
