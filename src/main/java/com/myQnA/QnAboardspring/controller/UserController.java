@@ -25,24 +25,45 @@ public class UserController {
     public String create(User user){
         System.out.println("User : "+user);
         userRepository.save(user);
+
         return "redirect:/users";
     }
 
     @GetMapping("")
     public String list(Model model){
         model.addAttribute("users",userRepository.findAll());
+
         return "/user/list";
     }
 
     @GetMapping("/{id}/form")
-    public String updateForm(@PathVariable Long id,Model model){
+    public String updateForm(@PathVariable Long id,Model model,HttpSession session){
+        User sessionUser= (User) session.getAttribute("sessionUser");
+        if(sessionUser==null){
+            return "redirect:/user/loginForm";
+        }
+
+        if(!id.equals(sessionUser.getId())){
+            throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
+        }
+
         User user=userRepository.findById(id).get();
         model.addAttribute("user",user);
+
         return "/user/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id,User updateUser){
+    public String updateUser(@PathVariable Long id,User updateUser,HttpSession session){
+        User sessionUser= (User) session.getAttribute("sessionUser");
+        if(sessionUser==null){
+            return "redirect:/user/loginForm";
+        }
+
+        if(!id.equals(sessionUser.getId())){
+            throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
+        }
+
         User user=userRepository.findById(id).get();
         user.update(updateUser);
         userRepository.save(user);
@@ -64,14 +85,14 @@ public class UserController {
         if(!password.equals(user.getPassword())){
             return "redirect:/users/loginForm";
         }
-        session.setAttribute("user",user);
+        session.setAttribute("sessionUser",user);
 
         return "redirect:/";
     }
 
     @GetMapping("logout")
     public String logout(HttpSession session){
-        session.removeAttribute("user");
+        session.removeAttribute("sessionUser");
 
         return "redirect:/";
     }
