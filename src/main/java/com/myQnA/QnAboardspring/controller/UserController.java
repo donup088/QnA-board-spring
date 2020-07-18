@@ -86,14 +86,14 @@ public class UserController {
         if(!user.matchPassword(password)){
             return "/user/login_failed";
         }
-        session.setAttribute("sessionUser",user);
+        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY,user);
 
         return "redirect:/";
     }
 
     @GetMapping("logout")
     public String logout(HttpSession session){
-        session.removeAttribute("sessionUser");
+        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
 
         return "redirect:/";
     }

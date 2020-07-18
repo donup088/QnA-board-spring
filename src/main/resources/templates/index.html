@@ -11,16 +11,17 @@
    <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
       <div class="panel panel-default qna-list">
           <ul class="list">
+              {{#questions}}
               <li>
                   <div class="wrap">
                       <div class="main">
                           <strong class="subject">
-                              <a href="./qna/show.html">Test 질문!!!</a>
+                              <a href="./qna/show.html">{{title}}</a>
                           </strong>
                           <div class="auth-info">
                               <i class="icon-add-comment"></i>
                               <span class="time">2020-07-15 18:47</span>
-                              <a href="./user/profile.html" class="author">Dong</a>
+                              <a href="./user/profile.html" class="author">{{writer}}</a>
                           </div>
                           <div class="reply" title="댓글">
                               <i class="icon-reply"></i>
@@ -29,25 +30,8 @@
                       </div>
                   </div>
               </li>
-              <li>
-                  <div class="wrap">
-                      <div class="main">
-                          <strong class="subject">
-                              <a href="./qna/show.html">두번째 Test 질문!!!</a>
-                          </strong>
-                          <div class="auth-info">
-                              <i class="icon-add-comment"></i>
-                              <span class="time">2020-07-05 18:47</span>
-                              <a href="./user/profile.html" class="author">DongDong</a>
-                          </div>
-                          <div class="reply" title="댓글">
-                              <i class="icon-reply"></i>
-                              <span class="point">12</span>
-                          </div>
-                      </div>
-                  </div>
-              </li>
           </ul>
+          {{/questions}}
           <div class="row">
               <div class="col-md-3"></div>
               <div class="col-md-6 text-center">
@@ -62,7 +46,7 @@
                 </ul>
               </div>
               <div class="col-md-3 qna-write">
-                  <a href="./qna/form.html" class="btn btn-primary pull-right" role="button">질문하기</a>
+                  <a href="/questions/form" class="btn btn-primary pull-right" role="button">질문하기</a>
               </div>
           </div>
         </div>
