@@ -2,6 +2,7 @@ package com.myQnA.QnAboardspring.controller;
 
 import com.myQnA.QnAboardspring.domain.User;
 import com.myQnA.QnAboardspring.domain.UserRepository;
+import com.myQnA.QnAboardspring.utils.HttpSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,12 +39,12 @@ public class UserController {
 
     @GetMapping("/{id}/form")
     public String updateForm(@PathVariable Long id,Model model,HttpSession session){
-        User sessionUser= (User) session.getAttribute("sessionUser");
-        if(sessionUser==null){
+        User sessionUser= HttpSessionUtils.getUserFromSession(session);
+        if(!HttpSessionUtils.isLogin(session)){
             return "redirect:/user/loginForm";
         }
 
-        if(!id.equals(sessionUser.getId())){
+        if(!sessionUser.matchId(id)){
             throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
         }
 
@@ -55,8 +56,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public String updateUser(@PathVariable Long id,User updateUser,HttpSession session){
-        User sessionUser= (User) session.getAttribute("sessionUser");
-        if(sessionUser==null){
+        User sessionUser= HttpSessionUtils.getUserFromSession(session);
+        if(!HttpSessionUtils.isLogin(session)){
             return "redirect:/user/loginForm";
         }
 
@@ -80,10 +81,10 @@ public class UserController {
     public String login(String userId, String password, HttpSession session){
         User user=userRepository.findByUserId(userId);
         if(user==null){
-            return "redirect:/users/loginForm";
+            return "/user/login_failed";
         }
-        if(!password.equals(user.getPassword())){
-            return "redirect:/users/loginForm";
+        if(!user.matchPassword(password)){
+            return "/user/login_failed";
         }
         session.setAttribute("sessionUser",user);
 

@@ -70,6 +70,19 @@ public class User {
         this.name=updateUser.name;
     }
 
+    public boolean matchPassword(String inputPassword){
+        if(inputPassword==null){
+            return false;
+        }
+        return inputPassword.equals(password);
+    }
+    public boolean matchId(Long inputId){
+        if(inputId==null){
+            return false;
+        }
+        return inputId.equals(id);
+    }
+
     @Override
     public String toString() {
         return "User{" +
