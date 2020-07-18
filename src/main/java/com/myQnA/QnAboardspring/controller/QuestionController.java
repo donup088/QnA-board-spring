@@ -6,9 +6,8 @@ import com.myQnA.QnAboardspring.domain.User;
 import com.myQnA.QnAboardspring.utils.HttpSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,9 +33,45 @@ public class QuestionController {
         }
         User sessionUser=HttpSessionUtils.getUserFromSession(session);
 
-        Question newQuestion=new Question(sessionUser.getUserId(),title,content);
+        Question newQuestion=new Question(sessionUser,title,content);
+
+        System.out.println("content: "+content);
 
         questionRepository.save(newQuestion);
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String showQuestion(@PathVariable Long id, Model model){
+        Question question=questionRepository.findById(id).get();
+        model.addAttribute("question",question);
+
+        return "/qna/show";
+    }
+
+    @GetMapping("/{id}/form")
+    public String updateQuestionForm(@PathVariable Long id,Model model){
+        Question question=questionRepository.findById(id).get();
+        model.addAttribute("question",question);
+
+        return "/qna/updateForm";
+    }
+
+    @PutMapping("/{id}")
+    public String updateQuestion(@PathVariable Long id,String title,String content){
+        Question question=questionRepository.findById(id).get();
+        question.update(title,content);
+
+        questionRepository.save(question);
+
+        return String.format("redirect:/questions/%d",id);
+    }
+    @DeleteMapping("/{id}")
+    public String deleteQuestion(@PathVariable Long id){
+        Question question=questionRepository.findById(id).get();
+
+        questionRepository.delete(question);
+
         return "redirect:/";
     }
 }
