@@ -50,25 +50,53 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}/form")
-    public String updateQuestionForm(@PathVariable Long id,Model model){
-        Question question=questionRepository.findById(id).get();
-        model.addAttribute("question",question);
+    public String updateQuestionForm(@PathVariable Long id,Model model,HttpSession session){
+        if(!HttpSessionUtils.isLogin(session)){
+            return "/users/loginForm";
+        }
 
+        User loginUser=HttpSessionUtils.getUserFromSession(session);
+        Question question=questionRepository.findById(id).get();
+
+        if(!question.isSameWriter(loginUser)){
+            return "/users/loginForm";
+        }
+
+        model.addAttribute("question",question);
         return "/qna/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String updateQuestion(@PathVariable Long id,String title,String content){
-        Question question=questionRepository.findById(id).get();
-        question.update(title,content);
+    public String updateQuestion(@PathVariable Long id,String title,String content,HttpSession session){
+        if(!HttpSessionUtils.isLogin(session)){
+            return "/users/loginForm";
+        }
 
+        User loginUser=HttpSessionUtils.getUserFromSession(session);
+        Question question=questionRepository.findById(id).get();
+
+        if(!question.isSameWriter(loginUser)){
+            return "/users/loginForm";
+        }
+
+        question.update(title,content);
         questionRepository.save(question);
 
         return String.format("redirect:/questions/%d",id);
     }
+
     @DeleteMapping("/{id}")
-    public String deleteQuestion(@PathVariable Long id){
+    public String deleteQuestion(@PathVariable Long id,HttpSession session){
+        if(!HttpSessionUtils.isLogin(session)){
+            return "/users/loginForm";
+        }
+
+        User loginUser=HttpSessionUtils.getUserFromSession(session);
         Question question=questionRepository.findById(id).get();
+
+        if(!question.isSameWriter(loginUser)){
+            return "/users/loginForm";
+        }
 
         questionRepository.delete(question);
 

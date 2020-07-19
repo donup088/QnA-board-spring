@@ -52,21 +52,21 @@
                   <div class="qna-comment-slipp">
                       <p class="qna-comment-count"><strong>1</strong>개의 의견</p>
                       <div class="qna-comment-slipp-articles">
-
+                          {{#answers}}
                           <article class="article" id="answer-1405">
                               <div class="article-header">
                                   <div class="article-header-thumb">
                                       <img src="https://image.flaticon.com/icons/svg/2945/2945506.svg" class="article-author-thumb" alt="">
                                   </div>
                                   <div class="article-header-text">
-                                      <a href="/users/1/dong" class="article-author-name">Dong</a>
+                                      <a href="/users/1/dong" class="article-author-name">{{writer.id}}</a>
                                       <a href="#answer-1434" class="article-header-time" title="퍼머링크">
-                                          2020-07-18 14:06
+                                          {{formattedCreateDate}}
                                       </a>
                                   </div>
                               </div>
                               <div class="article-doc comment-doc">
-                                  <p>테스트!!!</p>
+                                  <p>{{content}}</p>
                               </div>
                               <div class="article-util">
                                   <ul class="article-util-list">
@@ -82,11 +82,12 @@
                                   </ul>
                               </div>
                           </article>
-                          <form class="submit-write">
+                          {{/answers}}
+                          <form class="submit-write" method="post" action="/questions/{{id}}/answers">
                               <div class="form-group" style="padding:14px;">
-                                  <textarea class="form-control" placeholder="Update your status"></textarea>
+                                  <textarea class="form-control" placeholder="Update your status" name="content"></textarea>
                               </div>
-                              <button class="btn btn-success pull-right" type="button">답변하기</button>
+                              <input type="submit" class="btn btn-success pull-right" value="답변하기"/>
                               <div class="clearfix" />
                           </form>
                       </div>
