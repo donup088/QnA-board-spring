@@ -1,6 +1,7 @@
 package com.myQnA.QnAboardspring.domain;
 
-import org.springframework.lang.NonNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +14,20 @@ public class User {
 
     @Id
     @GeneratedValue
+    @JsonProperty
     private Long id;
 
     @Column(nullable = false,length = 20, unique = true)
+    @JsonProperty
     private String userId;
 
+    @JsonIgnore
     private String password;
 
+    @JsonProperty
     private String name;
 
+    @JsonProperty
     private String email;
 
     public String getUserId() {

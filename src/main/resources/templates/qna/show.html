@@ -83,7 +83,7 @@
                               </div>
                           </article>
                           {{/answers}}
-                          <form class="submit-write" method="post" action="/questions/{{id}}/answers">
+                          <form class="answer-write" method="post" action="/api/questions/{{id}}/answers">
                               <div class="form-group" style="padding:14px;">
                                   <textarea class="form-control" placeholder="Update your status" name="content"></textarea>
                               </div>
@@ -103,7 +103,7 @@
 	<article class="article">
 		<div class="article-header">
 			<div class="article-header-thumb">
-				<img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
+				<img src="https://image.flaticon.com/icons/svg/2945/2945506.svg" class="article-author-thumb" alt="">
 			</div>
 			<div class="article-header-text">
 				<a href="#" class="article-author-name">{0}</a>
