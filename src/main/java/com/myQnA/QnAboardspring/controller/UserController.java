@@ -78,17 +78,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(String userId, String password, HttpSession session){
+    public String login(String userId, String password, HttpSession session,Model model){
         User user=userRepository.findByUserId(userId);
-        if(user==null){
-            return "/user/login_failed";
-        }
-        if(!user.matchPassword(password)){
-            return "/user/login_failed";
-        }
-        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY,user);
 
-        return "redirect:/";
+        try{
+            userPasswordCheck(user,password);
+            session.setAttribute(HttpSessionUtils.USER_SESSION_KEY,user);
+
+            return "redirect:/";
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage",e.getMessage());
+            return "/user/loginForm";
+        }
     }
 
     @GetMapping("logout")
@@ -97,4 +98,14 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    private void userPasswordCheck(User user,String password){
+        if(user==null){
+            throw new IllegalStateException("로그인을 해야합니다.");
+        }
+        if (!user.matchPassword(password)){
+            throw new IllegalStateException("올바른 비밀번호를 입력하세요.");
+        }
+    }
+
 }
