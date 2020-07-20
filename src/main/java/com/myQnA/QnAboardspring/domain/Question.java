@@ -26,6 +26,9 @@ public class Question {
     @JsonProperty
     private String content;
 
+    @JsonProperty
+    private Integer countOfAnswer;
+
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question")
@@ -39,6 +42,7 @@ public class Question {
         this.title = title;
         this.content = content;
         this.createDate=LocalDateTime.now();
+        this.countOfAnswer=0;
     }
 
     public String getFormattedCreateDate(){
@@ -57,4 +61,11 @@ public class Question {
         return this.writer.equals(loginUser);
     }
 
+    public void addAnswer() {
+        this.countOfAnswer+=1;
+    }
+
+    public void deleteAnswer() {
+        this.countOfAnswer-=1;
+    }
 }

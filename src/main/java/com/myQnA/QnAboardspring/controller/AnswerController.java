@@ -26,13 +26,14 @@ public class AnswerController {
 
         Question question = questionRepository.findById(questionId).get();
         Answer answer = new Answer(HttpSessionUtils.getUserFromSession(session), question, content);
+        question.addAnswer();
 
         return answerRepository.save(answer);
 
     }
 
     @DeleteMapping("/{id}")
-    public Result deleteAnswer(@PathVariable Long id, HttpSession session) {
+    public Result deleteAnswer(@PathVariable Long questionId,@PathVariable Long id, HttpSession session) {
         if (!HttpSessionUtils.isLogin(session)) {
             return Result.fail("로그인해야 합니다.");
         }
@@ -45,6 +46,10 @@ public class AnswerController {
         }
 
         answerRepository.delete(answer);
+
+        Question question=questionRepository.findById(questionId).get();
+        question.deleteAnswer();
+        questionRepository.save(question);
 
         return Result.ok();
     }
