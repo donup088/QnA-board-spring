@@ -59,7 +59,7 @@
                                       <img src="https://image.flaticon.com/icons/svg/2945/2945506.svg" class="article-author-thumb" alt="">
                                   </div>
                                   <div class="article-header-text">
-                                      <a href="/users/1/dong" class="article-author-name">{{writer.id}}</a>
+                                      <a href="/users/1/dong" class="article-author-name">{{writer.userId}}</a>
                                       <a href="#answer-1434" class="article-header-time" title="퍼머링크">
                                           {{formattedCreateDate}}
                                       </a>
@@ -74,10 +74,7 @@
                                           <a class="link-modify-article" href="/questions/413/answers/1405/form">수정</a>
                                       </li>
                                       <li>
-                                          <form class="delete-answer-form" action="/questions/413/answers/1405" method="POST">
-                                              <input type="hidden" name="_method" value="DELETE">
-                                              <button type="submit" class="delete-answer-button">삭제</button>
-                                          </form>
+                                          <a class="link-delete-answer" href="/api/questions/{{question.id}}/answers/{{id}}">삭제</a>
                                       </li>
                                   </ul>
                               </div>
@@ -119,14 +116,11 @@
 				<a class="link-modify-article" href="/api/qna/updateAnswer/{3}">수정</a>
 			</li>
 			<li>
-				<form class="delete-answer-form" action="/api/questions/{3}/answers/{4}" method="POST">
-					<input type="hidden" name="_method" value="DELETE">
-                     <button type="submit" class="delete-answer-button">삭제</button>
-				</form>
-			</li>
-		</ul>
-		</div>
-	</article>
+                <a class="link-delete-answer" href="/api/questions/{3}/answers/{4}">삭제</a>
+            </li>
+        </ul>
+        </div>
+    </article>
 </script>
 {{> include/footer}}
 </body>

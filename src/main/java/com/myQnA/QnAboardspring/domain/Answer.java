@@ -71,4 +71,8 @@ public class Answer {
                 ", createDate=" + createDate +
                 '}';
     }
+
+    public boolean isSameWriter(User loginUser) {
+        return loginUser.equals(this.writer);
+    }
 }
